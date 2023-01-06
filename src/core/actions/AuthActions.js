@@ -1,6 +1,7 @@
 /* eslint-disable import/no-useless-path-segments */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
+import { toast } from "react-toastify";
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
@@ -20,6 +21,16 @@ function loginUserSuccess(dispatch, user, navigate) {
       token: user.access_token,
       isAdmin: user.data.isAdmin,
     },
+  });
+  toast.success("Login Success!", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
   });
   navigate("/dashboards/sales");
 }

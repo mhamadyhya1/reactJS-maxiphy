@@ -31,8 +31,32 @@ class RequestEngine {
   }
 
   async signup(data) {
-    const link = "/api/admin/signup";
+    const link = "/auth/signup";
     const res = await this.apiEngine.post(link, data);
+    return res;
+  }
+
+  async createTask(data) {
+    const link = "/task";
+    const res = await this.apiEngine.post(link, data);
+    return res;
+  }
+
+  deleteTask(id, callback) {
+    const link = `/task/${id}`;
+    this.apiEngine
+      .delete(link)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async getUsers() {
+    const link = "/users";
+    const res = await this.apiEngine.get(link);
     return res;
   }
 
@@ -45,22 +69,16 @@ class RequestEngine {
     if (!Limit) {
       Limit = 10;
     }
-    console.log(page);
-    const link = `/task/all/?page=${Page}&limit=${limit}`;
+    const link = `/task/allPaginated/?page=${Page}&limit=${limit}`;
     this.apiEngine
       .get(link)
       .then((response) => {
+        console.log(response);
         callback(response);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
-
-  async applicantDetails(id) {
-    const link = `/api/admin/applicant/${id}`;
-    const res = await this.apiEngine.get(link, id);
-    return res;
   }
 }
 
