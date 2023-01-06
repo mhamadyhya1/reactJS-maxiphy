@@ -6,6 +6,8 @@ import Sales from "layouts/dashboards/sales";
 import Icon from "@mui/material/Icon";
 import Cover from "layouts/authentication/sign-in/cover";
 import TaskTable from "layouts/tasks/allTasks";
+import CreateTask from "layouts/tasks/allTasks/createTask";
+import CoverSignUp from "layouts/authentication/sign-up/cover";
 
 const routes = [
   {
@@ -47,6 +49,18 @@ const routes = [
     key: "cover",
     route: "/authentication/sign-in/",
     component: <Cover />,
+  },
+  {
+    name: "signUp",
+    key: "cover",
+    route: "/authentication/sign-up/cover",
+    component: <CoverSignUp />,
+  },
+  {
+    name: "createTask",
+    key: "task",
+    route: "/task/create/",
+    component: <CreateTask />,
   },
 ];
 

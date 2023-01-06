@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState, useEffect, useMemo } from "react";
-
+import "react-toastify/dist/ReactToastify.css";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 

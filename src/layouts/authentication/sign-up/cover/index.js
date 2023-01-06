@@ -14,8 +14,8 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
@@ -23,7 +23,6 @@ import Checkbox from "@mui/material/Checkbox";
 // Material Dashboard 2 PRO React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
 // Authentication layout components
@@ -31,8 +30,28 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import { TextField } from "@mui/material";
+import RequestEngine from "../../../../core/RequestEngine";
 
-function Cover() {
+function CoverSignUp() {
+  const navigate = useNavigate();
+  const engine = new RequestEngine();
+  // const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  function onChange(event) {
+    setUser((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  }
+  const onSignUp = async () => {
+    const data = { email: user.email, name: user.name, password: user.password };
+    const response = await engine.signup(data);
+    if (response.status === 201) {
+      navigate("/authentication/sign-in/");
+    }
+  };
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -57,13 +76,37 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <TextField
+                type="text"
+                label="Name"
+                name="name"
+                value={user.name}
+                variant="standard"
+                fullWidth
+                onChange={(e) => onChange(e)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <TextField
+                type="email"
+                label="Email"
+                name="email"
+                value={user.email}
+                variant="standard"
+                fullWidth
+                onChange={(e) => onChange(e)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <TextField
+                type="password"
+                label="Password"
+                name="password"
+                value={user.password}
+                variant="standard"
+                fullWidth
+                onChange={(e) => onChange(e)}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
@@ -87,7 +130,7 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={onSignUp}>
                 sign in
               </MDButton>
             </MDBox>
@@ -113,4 +156,4 @@ function Cover() {
   );
 }
 
-export default Cover;
+export default CoverSignUp;
